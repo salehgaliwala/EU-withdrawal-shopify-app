@@ -169,7 +169,7 @@ You need to create the database for Prisma. Run the `setup` script in `package.j
 Embedded Shopify apps must maintain the user session, which can be tricky inside an iFrame. To avoid issues:
 
 1. Use `Link` from `@remix-run/react` or `@shopify/polaris`. Do not use `<a>`.
-2. Use the `redirect` helper returned from `authenticate.admin`. Do not use `redirect` from `@remix-run/node`
+2. Use the `redirect` helper returned from `authenticate.admin`. Do not use `redirect` from `@vercel/remix`
 3. Use `useSubmit` or `<Form/>` from `@remix-run/react`. Do not use a lowercase `<form/>`.
 
 This only applies if your app is embedded, which it will be by default.

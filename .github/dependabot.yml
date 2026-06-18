@@ -44,7 +44,7 @@ updates:
         patterns:
           - '@remix-run/dev'
           - '@remix-run/fs-routes'
-          - '@remix-run/node'
+          - '@vercel/remix'
           - '@remix-run/react'
           - '@remix-run/eslint-config'
           - '@remix-run/route-config'

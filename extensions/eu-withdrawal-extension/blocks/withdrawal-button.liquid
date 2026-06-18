@@ -1,0 +1,91 @@
+{% assign settings = shop.metafields.eu_withdrawal.settings.value %}
+{% assign button_text = settings.buttonText | default: "Request EU Withdrawal" %}
+
+<div class="eu-withdrawal-container">
+  <button id="eu-withdrawal-trigger" class="button">{{ button_text }}</button>
+
+  <div id="eu-withdrawal-modal" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4);">
+    <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px;">
+      <h2>{{ button_text }}</h2>
+      <form id="eu-withdrawal-form">
+        <p>
+          <label for="order-number">Order Number:</label><br>
+          <input type="text" id="order-number" name="orderNumber" required value="{{ order.name }}" style="width: 100%;">
+        </p>
+        <p>
+          <input type="checkbox" id="confirm-withdrawal" name="confirm" required>
+          <label for="confirm-withdrawal">I confirm I want to exercise my right of withdrawal for this order.</label>
+        </p>
+        <input type="hidden" name="orderId" value="{{ order.id }}">
+        <button type="submit" class="button">Submit Request</button>
+        <button type="button" id="close-modal" class="button button--secondary">Cancel</button>
+      </form>
+      <div id="withdrawal-message" style="margin-top: 10px;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const trigger = document.getElementById('eu-withdrawal-trigger');
+    const modal = document.getElementById('eu-withdrawal-modal');
+    const closeBtn = document.getElementById('close-modal');
+    const form = document.getElementById('eu-withdrawal-form');
+    const messageDiv = document.getElementById('withdrawal-message');
+
+    if (trigger) {
+      trigger.addEventListener('click', () => {
+        modal.style.display = 'block';
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = {
+          orderNumber: formData.get('orderNumber'),
+          orderId: formData.get('orderId'),
+          shop: "{{ shop.permanent_domain }}"
+        };
+
+        try {
+          const response = await fetch('/apps/eu-withdrawal/api/withdrawal', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (response.ok) {
+            messageDiv.innerHTML = '<p style="color: green;">Withdrawal request submitted successfully.</p>';
+            setTimeout(() => {
+              modal.style.display = 'none';
+              messageDiv.innerHTML = '';
+            }, 3000);
+          } else {
+            messageDiv.innerHTML = '<p style="color: red;">Error submitting request. Please try again.</p>';
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          messageDiv.innerHTML = '<p style="color: red;">An error occurred. Please try again.</p>';
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Withdrawal Button",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}

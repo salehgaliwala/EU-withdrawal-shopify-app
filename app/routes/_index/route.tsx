@@ -22,34 +22,38 @@ export default function App() {
   return (
     <div className={styles.index}>
       <div className={styles.content}>
-        <h1 className={styles.heading}>A short heading about [your app]</h1>
+        <h1 className={styles.heading}>EU Right of Withdrawal Compliance</h1>
         <p className={styles.text}>
-          A tagline about [your app] that describes your value proposition.
+          Simplify EU consumer rights management and stay compliant with ease.
         </p>
         {showForm && (
           <Form className={styles.form} method="post" action="/auth/login">
             <label className={styles.label}>
               <span>Shop domain</span>
-              <input className={styles.input} type="text" name="shop" />
-              <span>e.g: my-shop-domain.myshopify.com</span>
+              <input
+                className={styles.input}
+                type="text"
+                name="shop"
+                placeholder="my-shop.myshopify.com"
+              />
             </label>
             <button className={styles.button} type="submit">
-              Log in
+              Install App
             </button>
           </Form>
         )}
         <ul className={styles.list}>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Automated Tagging</strong>
+            <p>Orders are instantly tagged when a withdrawal is requested, keeping your fulfillment team informed.</p>
           </li>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Customizable Button</strong>
+            <p>Seamlessly integrate a withdrawal request button into your Customer Account or Order Status pages.</p>
           </li>
           <li>
-            <strong>Product feature</strong>. Some detail about your feature and
-            its benefit to your customer.
+            <strong>Legal Compliance</strong>
+            <p>Meet EU consumer protection requirements without the manual overhead of tracking requests.</p>
           </li>
         </ul>
       </div>

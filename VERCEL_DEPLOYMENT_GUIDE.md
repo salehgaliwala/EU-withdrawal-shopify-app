@@ -70,7 +70,7 @@ The following changes have already been applied to optimize the app for Vercel:
 - **`vite.config.ts`**: Added the `vercelPreset()` to the Remix plugin.
 - **`app/shopify.server.ts`**: Switched from the `node` adapter to the `vercel` adapter.
 - **Dependency**: Added `@vercel/remix` to `package.json`.
-- **Imports**: Updated `@remix-run/node` imports to `@vercel/remix` across the application to ensure compatibility with Vercel's Edge/Serverless functions.
+- **Imports**: Updated application imports to `@vercel/remix` where appropriate, while maintaining `@remix-run/node` for server-side utilities like `createReadableStreamFromReadable` to ensure full compatibility.
 
 ## 6. Post-Deployment
 
